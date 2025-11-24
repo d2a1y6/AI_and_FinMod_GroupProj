@@ -1,0 +1,530 @@
+\documentclass[11pt]{beamer}
+\usepackage[UTF8]{ctex}
+\usepackage{comment,caption}
+\usepackage{tikz,verbatim}
+\usepackage{wrapfig}
+\usepackage{graphicx,subfig}
+\usepackage{lipsum}
+\usepackage{mwe}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\newcolumntype{C}[1]{>{\PreserveBackslash\centering}p{#1}}
+\newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}p{#1}}
+\newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
+\linespread{1.0}
+\definecolor{darkgreen}{rgb}{0.0, 0.2, 0.13}
+\definecolor{aggressiveRed}{RGB}{204, 0, 0}   % 進攻型顏色
+\definecolor{defensiveBlue}{RGB}{0, 51, 102}  % 防守型顏色
+\definecolor{tableGray}{RGB}{240, 240, 240}
+
+\mode<presentation>
+{
+	\usetheme{Berlin}      % or try Darmstadt, Madrid, Warsaw, ...
+	\usecolortheme{beaver} % or try albatross, beaver, crane, ...
+	\usefonttheme{serif}  % or try serif, structurebold, ...
+	\setbeamertemplate{caption}[numbered]
+	\setbeamertemplate{navigation symbols}{}
+} 
+
+
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\setbeamertemplate{blocks}[framed]
+\setbeamercolor{block title}{fg=blue, bg=gray!40}
+\setbeamercolor{block body}{fg=black,bg=gray!10}
+\setbeamercolor{block title alerted}{fg=red,bg=gray!40}
+\setbeamercolor{block title example}{fg=black,bg=green!20}
+\setbeamercolor{block body example}{fg=black,bg=green!5}
+%\setbeamerfont{block title}{series=\bfseries}
+% --- 多作者 ---
+\newcommand{\myauthor}[2]{%
+	\parbox{0.22\textwidth}{%
+		\centering
+		#1 \\ 
+		\scriptsize #2 
+	}%
+}
+
+\usepackage[english]{babel}
+
+\makeatletter
+
+% --- 标题页 ---
+\title[中欧时代先锋股票分析] 
+{中欧时代先锋股票基金经理业绩评估} 
+\author[董安愉、李想、杨晨艺]
+{
+	\myauthor{董安愉}{Anyu Dong}\hfill 
+	\myauthor{李想}{Xiang Li}\hfill
+	\myauthor{杨晨艺}{Chenyi Yang}
+}
+\institute[] 
+{\large 北京大学元培学院}
+\date{Novenmber 25, 2025}
+
+% --- 自定义页脚 ---
+\setbeamertemplate{footline}
+{
+	\leavevmode%
+	\hbox{%
+		% 左边：作者 (单位)
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=3ex,dp=1.5ex,center]{author in head/foot}%
+			\usebeamerfont{author in head/foot}\insertshortauthor
+		\end{beamercolorbox}%
+		% 中间：标题
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=3ex,dp=1.5ex,center]{title in head/foot}%
+			\usebeamerfont{title in head/foot}\insertshorttitle
+		\end{beamercolorbox}%
+		% 右边：日期 页码
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=3ex,dp=1.5ex,right]{date in head/foot}%
+			\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+			\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+	\end{beamercolorbox}}%
+	\vskip0pt%
+}
+
+\makeatother
+
+% --- 自定义页眉 ---
+\setbeamertemplate{headline}
+{
+	\begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
+	\end{beamercolorbox}
+	\begin{beamercolorbox}{section in head/foot}
+		\vskip2pt\insertnavigation{\paperwidth}\vskip5pt
+	\end{beamercolorbox}%
+	\begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
+	\end{beamercolorbox}
+}
+
+% --- 自定义列表 ---
+\setbeamertemplate{itemize items}[ball]
+\setbeamertemplate{enumerate items}[ball]
+
+\begin{document}
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	\begin{frame}{目录}
+		\small
+		\linespread{0.8}\selectfont
+		\tableofcontents[hideallsubsections]
+	\end{frame}
+	
+	
+	
+	\section[基金选取]{基金选取说明}
+	% --- Fund Selection Slide ---
+	\begin{frame}{研究基金选择与说明}
+		\footnotesize
+		本小组研究基金选择说明如下：
+		\begin{table}
+			\centering
+			\renewcommand{\arraystretch}{1.2} 
+			\setlength{\tabcolsep}{6pt}       
+			\resizebox{\textwidth}{!}{
+				\begin{tabular}{p{0.12\textwidth} p{0.40\textwidth} p{0.40\textwidth}}
+					\toprule[1.5pt]
+					\textbf{维度} & \textbf{主分析对象} & \textbf{对照组对象} \\
+					\midrule
+					
+					\textbf{基金名称} & \textbf{中欧时代先锋股票A (001938)} & \textbf{中欧趋势LOF (166001)} \\
+					\rowcolor{gray!10} 
+					\textbf{基金经理} & 周应波 (主要研究其任职期) & 周应波 (主要研究其任职期) \\
+					
+					\textbf{选取理由} & 
+					\begin{itemize}
+						\item 历史业绩卓越，2021年获“金牛奖”；
+						\item 主动管理型成长风格基金，成立以来最大盈利达+193.84\%，平均年化回报27\%；
+						\item 5年以上历史数据完整。
+					\end{itemize} 
+					& 
+					\begin{itemize}
+						\item 由同一位基金经理管理；
+						\item 用于验证经理投资风格的一致性。进行对比分析；
+						\item 对比不同产品定位下的业绩差异。
+					\end{itemize} \\
+					
+					\rowcolor{gray!10} 
+					\textbf{研究区间} & 2019.01.01 - 2025.11.21 & 2019.01.01 - 2025.11.21 \\
+					\bottomrule[1.5pt]
+				\end{tabular}
+			}
+		\end{table}
+	\end{frame}
+	
+	
+	\section[因子计算]{因子月度时间序列计算结果}
+	\begin{frame}[t]  % [t] 让内容顶对齐，避免空白
+		\frametitle{月度时间序列计算结果比较：Carhart四因子}
+		
+		\centering
+		% 第 1 行
+		\includegraphics[width=0.25\linewidth]{image/mkt_1.png}\hfill
+		\includegraphics[width=0.25\linewidth]{image/smb_1.png}\hfill
+		\includegraphics[width=0.25\linewidth]{image/hml_1.png}\hfill
+		\includegraphics[width=0.25\linewidth]{image/umd_1.png}\\[1pt]
+		
+		% 第 2 行
+		\includegraphics[width=0.25\linewidth]{image/mkt_2.png}\hfill
+		\includegraphics[width=0.25\linewidth]{image/smb_2.png}\hfill
+		\includegraphics[width=0.25\linewidth]{image/hml_2.png}\hfill
+		\includegraphics[width=0.25\linewidth]{image/umd_2.png}\\[1pt]
+		
+		% 第 3 行
+		\includegraphics[width=0.25\linewidth]{image/mkt_3.png}\hfill
+		\includegraphics[width=0.25\linewidth]{image/smb_3.png}\hfill
+		\includegraphics[width=0.25\linewidth]{image/hml_3.png}\hfill
+		\includegraphics[width=0.25\linewidth]{image/umd_3.png}\\[1pt]
+		
+	\end{frame}
+	
+	
+	\begin{frame}{月度时间序列计算结果比较：FIN}
+		\footnotesize
+		\vspace{-1em}                    % 可微调垂直位置
+		\begin{columns}[T,onlytextwidth] % T=顶部对齐
+			\begin{column}{.48\textwidth}
+				\centering
+				\includegraphics[width=\linewidth]{image/fin_1.png}
+			\end{column}
+			\begin{column}{.48\textwidth}
+				\centering
+				\includegraphics[width=\linewidth]{image/fin_2.png}
+			\end{column}
+		\end{columns}
+		
+		\begin{block}{\textbf{FIN 因子构造}}
+			\begin{itemize}
+				\[
+				\mathrm{CEI}_t = \ln\bigl(\texttt{ME\_t} / \texttt{ME\_t5}) - \ln\bigl(1 + \texttt{Ret5y})
+				\]
+				\[
+				\text{FIN} = \frac{1}{2}(\text{S/L}_{\text{CEI}} + \text{B/L}_{\text{CEI}}) - \frac{1}{2}(\text{S/H}_{\text{CEI}} + \text{B/H}_{\text{CEI}})
+				\]
+				
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	\begin{frame}{月度时间序列计算结果比较：FIN}
+		\footnotesize
+		\vspace{-1em}                    % 可微调垂直位置
+		\begin{columns}[T,onlytextwidth] % T=顶部对齐
+			\begin{column}{.48\textwidth}
+				\centering
+				\includegraphics[width=\linewidth]{image/fin_1.png}
+			\end{column}
+			\begin{column}{.48\textwidth}
+				\centering
+				\includegraphics[width=\linewidth]{image/fin_2.png}
+			\end{column}
+		\end{columns}
+		
+		\begin{block}{\textbf{FIN 因子构造}}
+			\begin{itemize}
+				\item \textbf{经济含义：}
+				CEI 剔除股价自然上涨后，捕捉「公司是否靠发新股/配股做大规模」；  
+				值越高 → 外部融资越激进 → FIN 因子做空该组。
+				\item \textbf{行为学依据：}
+				投资者系统性高估外部融资企业的未来盈利增速（\emph{over-extrapolation}），导致其股价被暂时推高；随后盈利兑现不足，价格回落——FIN 因子正是做空这类“融资亢奋”错误定价。
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	\begin{frame}{因子的历史累计回报：计算值}
+		\footnotesize
+		\vspace{-1em}                    % 可微调垂直位置
+		\begin{columns}[T,onlytextwidth] % T=顶部对齐
+			\begin{column}{1\textwidth}
+				\centering
+				\includegraphics[width=\linewidth]{image/CR_min.png}
+			\end{column}
+			
+		\end{columns}
+		\begin{block}{\textbf{回报表现}}
+			\begin{itemize}
+				\item \textbf{MKT：}
+				年化收益=0.1182，年化波动=0.1794，夏普比率=0.6593；表现最佳，具有最高的年化收益和夏普比率
+				\item \textbf{SMB：}
+				年化收益=0.0606，年化波动=0.1435，夏普比率=0.4220；小市值股票在这段时间内表现较好
+				\item \textbf{HML：}
+				年化收益=-0.0117，年化波动=0.1475，夏普比率=-0.0792；价值股在这段时间内表现不佳
+				
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	\begin{frame}{因子的历史累计回报：计算值}
+		\footnotesize
+		\vspace{-1em}                    % 可微调垂直位置
+		\begin{columns}[T,onlytextwidth] % T=顶部对齐
+			\begin{column}{0.6\textwidth}
+				\centering
+				\includegraphics[width=\linewidth]{image/CR.png}
+			\end{column}
+			\begin{column}{0.33\textwidth}
+				\centering
+				\includegraphics[width=\linewidth]{image/corr.png}        
+			\end{column}
+			
+		\end{columns}
+		\begin{block}{\textbf{回报表现}}
+			\begin{itemize}
+				\item \textbf{FIN：}
+				年化收益=0.0150，年化波动=0.1108，夏普比率=0.1351；远离激进的外部融资股票可以带来正收益
+				\item \textbf{UMD：}
+				年化收益=-0.0083，年化波动=0.1289，夏普比率=-0.0646；动量策略在这段时间内未能提供正的超额收益
+				\item \textbf{联合分析}
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	\begin{frame}{因子的历史累计回报：课堂文件}
+		\footnotesize
+		\vspace{-1em}                    % 可微调垂直位置
+		
+		\begin{column}{1\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{image/CRR.png}
+		\end{column}
+		
+	\end{frame}
+	
+	
+	\section[主基金分析]{主基金业绩分析：多因子模型}
+	% ==============================================================
+	% Part 3: Main Fund Performance Attribution (Fixed Top Table Layout)
+	% ==============================================================
+	\newcommand{\RegressionTable}{
+		\begin{table}
+			\centering
+			\renewcommand{\arraystretch}{1.0}
+			\setlength{\tabcolsep}{3pt} 
+			\scriptsize
+			\vspace{-1em}
+			\caption{中欧时代先锋股票A(001938) 多模型回归结果汇总}
+			\vspace{-1.5em}
+			\begin{tabular}{l c c c c c c c c}
+				\toprule[1pt]
+				\textbf{模型} & \textbf{MKT} & \textbf{SMB} & \textbf{HML} & \textbf{UMD} & \textbf{R\_pead} & \textbf{R\_fin} & \textbf{MKT\textsuperscript{2}} & \textbf{Alpha(年化)} \\
+				\midrule
+				\textbf{CAPM} & 0.65 & - & - & - & - & - & - & 2.81\% \\
+				\rowcolor{gray!10}
+				\textbf{Carhart} & 0.57 & -0.06 & \textbf{-0.26} & \textbf{0.18} & - & - & - & 3.66\% \\
+				\textbf{DHS} & 0.56 & -0.11 & -0.20 & 0.18 & \textbf{0.08} & -0.13 & - & 4.75\% \\
+				\rowcolor{gray!10}
+				\textbf{TM择时} & 0.56 & -0.07 & -0.26 & 0.18 & - & - & \textbf{-0.88} & \textbf{6.62\%} \\
+				\bottomrule[1pt]
+			\end{tabular}
+		\end{table}
+		\vspace{-0.5em} % 调整表格与下方内容的间距
+	}
+	
+	% --- Slide 1: Risk & Style ---
+	\begin{frame}{主基金归因：基础多因子模型}
+		\footnotesize
+		\RegressionTable
+		\begin{block}{\textbf{基础模型解读 (CAPM \& Carhart)}}
+			\begin{itemize}
+				\item \textbf{低系统性风险：} 市场 $\beta$ (MKT) 始终维持在 \textbf{0.57-0.65} 区间，显著低于 1，说明基金在市场下跌时具有较好的防御性。
+				\item \textbf{投资风格分析：} 
+				\begin{itemize}
+					\footnotesize
+					\item \textbf{成长型：} HML 系数为 \textbf{-0.26} (显著负)，偏好高估值成长股；
+					\item \textbf{大盘股：} SMB 系数为负，偏好大盘蓝筹；
+					\item \textbf{动量效应：} UMD 系数为 \textbf{0.18} (显著正)，善于捕捉市场上涨趋势。
+				\end{itemize}
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	% --- Slide 2: Behavioral Factors ---
+	\begin{frame}{主基金归因：行为金融因子纳入}
+		\RegressionTable
+		\footnotesize
+		\begin{block}{\textbf{行为金融模型解读 (DHS)}}
+			\begin{itemize}
+				\item \textbf{利用市场错误定价：} 
+				\begin{itemize}
+					\footnotesize
+					\item 引入 \textit{盈余惯性(R\_pead)} 后，系数显著为正 (\textbf{0.08})；
+					\item 说明经理善于挖掘业绩超预期、但市场尚未充分反应的股票。
+				\end{itemize}
+				\item \textbf{Alpha 提升：} 
+				\begin{itemize}
+					\footnotesize
+					\item 模型解释力增强后，年化 Alpha 从 3.66\% 提升至 \textbf{4.75\%}；
+					\item 表明部分超额收益来源于对投资者行为偏差（如反应不足）的利用。
+				\end{itemize}
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	% --- Slide 3: Timing vs Selection ---
+	\begin{frame}{主基金归因：择时与选股能力剥离}
+		\RegressionTable
+		\footnotesize
+		\begin{block}{\textbf{择时能力模型解读 (TM)}}
+			\scriptsize
+			\begin{itemize}
+				\item \textbf{“负”择时现象：} 择时系数 $\gamma$ (MKT\textsuperscript{2}) 为 \textbf{-0.88}，说明从模型上看，TM模型认为基金经理的择时能力较弱。但经过深入分析，我们认为这主要反映了基金经理偏好左侧交易（越跌越买）。
+				\item \textbf{真实的选股能力：} 剥离左侧交易的择时负面损耗后，纯选股 Alpha 飙升至 \textbf{6.62\%};说明该基金的核心竞争力在于\textcolor{red}{卓越的选股能力}，而非仓位择时。
+				\item \textbf{公墓基金底仓限制：} 考虑到本产品为时代先锋股票型基金，合同要求股票投资占基金资产的比例为80\%–95\%，因此基金经理无法在熊市通过大幅减仓来做“正择时”。
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	
+	\section[对照基金分析]{对照基金业绩分析：多因子模型与基金经理风格画像}
+	% ==============================================================
+	% Part 4: 对照基金业绩归因分析与经理风格画像
+	% ==============================================================
+	% --- Slide 4.1: Control Group Attribution ---
+	\begin{frame}{对照基金归因：稳健型产品的风格验证}
+		\begin{table}
+			\centering
+			\vspace{-1em}
+			\caption{中欧趋势 LOF (166001) 多模型回归结果汇总}
+			\vspace{-1.3em}
+			\resizebox{1\textwidth}{!}{%
+				\renewcommand{\arraystretch}{1.0}
+				\setlength{\tabcolsep}{4pt}
+				\begin{tabular}{l c c c c c c c c}
+					\toprule[1pt]
+					\textbf{模型} & \textbf{MKT} & \textbf{SMB} & \textbf{HML} & \textbf{UMD} & \textbf{R\_pead} & \textbf{R\_fin} & \textbf{MKT\textsuperscript{2}} & \textbf{Alpha} \\
+					\midrule
+					\textbf{CAPM} & \textbf{0.49} & - & - & - & - & - & - & 1.67\% \\
+					\rowcolor{gray!10}
+					\textbf{Carhart} & 0.46 & -0.08 & \textbf{-0.14} & 0.08 & - & - & - & 2.30\% \\
+					\textbf{DHS} & 0.46 & -0.08 & -0.15 & 0.08 & \textbf{0.05} & 0.03 & - & 1.94\% \\
+					\rowcolor{gray!10}
+					\textbf{TM择时} & 0.46 & -0.09 & -0.14 & 0.08 & - & - & \textbf{-0.57} & \textbf{4.23\%} \\
+					\bottomrule[1pt]
+				\end{tabular}%
+			}
+		\end{table}
+		
+		\vspace{-0.3cm}
+		
+		% Block 标题加粗，内容字号缩小
+		\begin{block}{\textbf{关键数据解读}}
+			\footnotesize % 字号调整为 footnotesize
+			\begin{itemize}
+				\item \textbf{低风险定位：} 市场 Beta (0.49) 低于主基金 (0.65)，验证了其防御属性。
+				\item \textbf{风格延续：} 同样呈现 \textbf{负HML} (成长) 和 \textbf{负SMB} (大盘) 特征，但幅度较主基金温和。
+				\item \textbf{择时与行为因子：} 
+				\begin{itemize}
+					\item \footnotesize 
+					盈余惯性因子(R\_pead) 暴露为正，说明在稳健型产品中经理依然使用了同样的选股逻辑。
+					\item \footnotesize 择时系数为 \textbf{-0.57} (显著负)，剥离后 Alpha 显著回升至 4.23\%。
+				\end{itemize}
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	% --- Slide 4.2: Comparison ---
+	\begin{frame}{两支基金对照：进攻 vs 防守}
+		\small
+		\textbf{主基金 (001938) 与 对照基金 (166001) 核心指标对比}
+		\begin{table}
+			\centering
+			\caption{双基金风险收益特征对比表}
+			\vspace{-1em}
+			\resizebox{1.0\textwidth}{!}{%
+				\renewcommand{\arraystretch}{1.4}
+				\begin{tabular}{l | c | c | l}
+					\toprule[1.5pt]
+					\textbf{维度} & \textbf{\textcolor{red}{时代先锋 (主)}} & \textbf{\textcolor{blue}{中欧趋势 (对照)}} & \textbf{差异解读} \\
+					\midrule
+					\rowcolor{gray!10} 
+					\textbf{定位} & \textbf{进攻型旗舰} & \textbf{稳健防御型} & 产品风险收益特征定位不同 \\
+					
+					\textbf{市场 Beta} & \textbf{0.65} & \textbf{0.49} & 对照组仓位控制更严，波动更小 \\
+					\rowcolor{gray!10} 
+					\textbf{成长暴露(HML)} & \textbf{-0.26} & -0.14 & 主基金的成长风格更为极致 \\
+					
+					\textbf{动量暴露(UMD)} & \textbf{0.18} & 0.08 & 主基金更积极捕捉市场热点趋势 \\
+					\rowcolor{gray!10} 
+					\textbf{年化 Alpha} & \textbf{3.66\%} & 2.30\% & 高风险敞口换取了更高的超额收益 \\
+					\bottomrule[1.5pt]
+				\end{tabular}%
+			}
+		\end{table}
+		\footnotesize \textit{*注：Alpha与因子数据基于 Carhart 四因子模型结果。}
+	\end{frame}
+	
+	% --- Slide 4.3: Manager Profile ---
+	\begin{frame}{基金经理投资风格画像}
+		\small
+		基于两只基金的量化归因，我们勾勒出基金经理的投资画像：
+		\begin{columns}[T]
+			\column{0.48\textwidth}
+			% Block 标题加粗，内容字号缩小
+			\begin{block}{\textbf{1. 核心能力圈 (不变)}}
+				\footnotesize 
+				\begin{itemize}
+					\item \textbf{大盘成长捕手：} 始终坚持“大盘+成长”的选股底色 (负SMB, 负HML)。
+					\item \textbf{行为金融套利：} 善于利用“盈余惯性”挖掘被低估的成长股。
+					\item \textbf{选股驱动：} 超额收益主要源自选股，而非仓位择时。
+				\end{itemize}
+			\end{block}
+			
+			\column{0.48\textwidth}
+			% Block 标题加粗，内容字号缩小
+			\begin{block}{\textbf{2. 差异化驾驭能力 (变)}}
+				\footnotesize
+				\begin{itemize}
+					\item \textbf{风险敞口管理：} 
+					\item \textcolor{red}{001938 (矛)}：放宽 Beta 至 0.65，极致暴露动量因子，追求进攻；
+					\item \textcolor{blue}{166001 (盾)}：压降 Beta 至 0.49，平滑波动，追求绝对收益。
+				\end{itemize}
+			\end{block}
+		\end{columns}
+		
+		\vspace{0.5cm}
+		\begin{itemize}
+			\item \textbf{总结：在统一的成长股投资框架下，通过精准的 Beta 管理实现了产品的差异化定位。}
+		\end{itemize}
+	\end{frame}
+	
+	
+	
+	\section[持仓模拟]{主基金持仓模拟与动态归因分析}
+	
+	\begin{frame}
+		\begin{itemize}
+			\item 等待安愉老师计量归来填充内容。
+		\end{itemize}
+	\end{frame}
+	
+	
+	\section[总结]{总结与小组分工}
+	
+	\begin{frame}{小组分工}
+		\small
+		\begin{columns}
+			\begin{column}{1\textwidth}
+				\begin{block}{小组成员分工}
+					\begin{itemize}
+						\item 董安愉: 
+						\item 李想: 完成因子计算及分析（对应作业文件1题）；后续步骤的基础数据准备下载
+						\item 杨晨艺: 完成主基金多因子分析和对照因子的多因子分析（对应作业文件2-4题和第6题）
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
+		
+		\vspace{1em}
+		
+		\centering
+		\footnotesize \textit{-- Thank you for your Attention--} \footnote{This presentation was made using \LaTeX{} and Beamer} \\
+		\footnotesize \textit{-- End of Report --}
+	\end{frame}
+	
+\end{document}
